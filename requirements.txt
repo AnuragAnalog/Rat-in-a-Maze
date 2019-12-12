@@ -1,4 +1,3 @@
 numpy==1.17.4
-tkinter
 pillow>=6.2.0
 termcolor==1.1.0
