@@ -2,10 +2,10 @@
 
 ## Problem Statement
 
-There will be a maze of size nxn, with walls at random position with random shape. The source will be at the top-left and the destination will be at the bottom-right.
+There will be a maze of size nxn, with walls at random position with random shape. The source will be at the top left, and the destination will be at the bottom right.
 > Source and Destination Positions can be customized
 
-The task is to find the cheese with is at the destination from the source.
+The task is to find the cheese which is at the destination from the source.
 
 **Priority**
 
@@ -43,4 +43,13 @@ Before running the file, see that you have installed all the packages
     sudo pip3 install -r requirements.txt
 
 and
+
     sudo apt install python3-tk
+
+## Miscellaneous
+
+You can even change the colors of the maze; they are customizable
+
+    ./colors.py
+
+The above program, displays all the possible colors in tkinter.
