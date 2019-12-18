@@ -10,6 +10,27 @@ from termcolor import colored
 from PIL import ImageTk, Image
 
 #Mazegame.NoDefaultRoot()
+def input_postion(n):
+    try:
+        src = int(input("Enter the position of Rat: "))
+    except:
+        src = 0
+
+    if src not in range(0, n*n-1):
+        print("Enter a valid Source Position")
+        sys.quit()
+
+    try:
+        dest = int(input("Enter the position of Cheese: "))
+    except:
+        dest = 0
+
+    if dest not in range(0, n*n-1):
+        print("Enter a valid Destination Position")
+        sys.quit()
+
+    return src, dest
+
 def rando(n):
     limit = np.random.randint(n*n/4,n*n/2)
     check = list()
