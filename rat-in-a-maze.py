@@ -23,7 +23,7 @@ def input_postion(n):
     try:
         dest = int(input("Enter the position of Cheese: "))
     except:
-        dest = 0
+        dest = n*n-1
 
     if dest not in range(0, n*n-1):
         print("Enter a valid Destination Position")
@@ -45,10 +45,14 @@ def rando(n):
             check.append(hold)
     return check
 
-def prepare_maze(n, check):
+def prepare_maze(n, check, src, dest):
     maze = [[0 for i in range(n)] for j in range(n)]
     for i in range(len(check)):
         maze[check[i]//n][check[i]%n] = 1
+
+    maze[src//n][src%n] = 0
+    maze[dest//n][dest%n] = 0
+
     return maze
 
 def display_maze(n, maze, pos):
@@ -96,7 +100,9 @@ def make_screen(n):
             rect[row, col] = grid.create_rectangle(x1,y1,x2,y2, fill="red", tags="rect")
     return grid, rect, screen, cellw
 
-def load_img(size, path, xcod, ycod):
+def load_img(size, path, dest):
+    xcod = dest//n
+    ycod = dest%n
     load = Image.open(path)
     load = load.resize((size, size), Image.ANTIALIAS)
     render = ImageTk.PhotoImage(load)
@@ -105,7 +111,7 @@ def load_img(size, path, xcod, ycod):
     img.place(x=ycod*size, y=xcod*size)
     return img
 
-def redraw_maze(grid, rect, screen, n, maze, pos, delay, size):
+def redraw_maze(grid, rect, screen, n, maze, pos, delay, size, dest):
     grid.itemconfig("rect", fill="green")
     path1 = "./go.png"
     path2 = "./cheese.jpg"
@@ -123,7 +129,7 @@ def redraw_maze(grid, rect, screen, n, maze, pos, delay, size):
             elif maze[i][j] == 2:
                 grid.itemconfig(item_id, fill="SpringGreen2")
 
-    load_img(size, path2, n-1, n-1)
+    load_img(size, path2, dest)
     screen.update_idletasks()
     screen.update()
     time.sleep(delay)
@@ -142,15 +148,15 @@ def popup_win(msg, title, path, screen):
     button("Close popup", popup, popup)
     popup.mainloop()
 
-def path(n, maze):
-    pos = 0
+def path(n, maze, src, dest):
+    pos = src
     stack = list()
     delay = 0.1
     path1 = "./fail.png"
     path2 = "./pass.png"
     grid, rect, screen, wid = make_screen(n)
 
-    while pos != n*n-1:
+    while pos != dest:
         r = pos//n
         c = pos%n
         if r in range(n) and c+1 in range(n) and maze[r][c+1] != 1 and maze[r][c+1] != -1 and maze[r][c+1] != 2:
@@ -190,10 +196,10 @@ def path(n, maze):
                         sys.quit()
                     pos = stack.pop()
                     display_maze(n, maze, pos)
-                    redraw_maze(grid, rect, screen, n, maze, pos, delay, wid)
+                    redraw_maze(grid, rect, screen, n, maze, pos, delay, wid, dest)
                 maze[pos//n][pos%n] = 2
         display_maze(n, maze, pos)
-        redraw_maze(grid, rect, screen, n, maze, pos, delay, wid)
+        redraw_maze(grid, rect, screen, n, maze, pos, delay, wid, dest)
     print("Rat Found The Cheese")
     msg = "Rat Found The Cheese"
     popup_win(msg, "Congrats", path2, screen)
@@ -211,6 +217,7 @@ def check_pos(r, c, n, maze):
 
 if __name__ == "__main__":
     n = int(input("Enter the dimension of the maze: "))
+    src, dest = input_postion(n)
     randno = rando(n)
-    maze = prepare_maze(n, randno)
+    maze = prepare_maze(n, randno, src, dest)
     path(n, maze)
