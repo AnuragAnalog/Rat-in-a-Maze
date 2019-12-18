@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import sys
 import time
 import numpy as np
 import tkinter as Mazegame
@@ -54,7 +55,7 @@ def make_screen(n):
        size = 750
     else:
         print("Invalid Maze size")
-        quit()
+        sys.quit()
 
     cellw = int(size/n)
     cellh = int(size/n)
@@ -153,7 +154,7 @@ def path(n, maze):
                 msg = "Rat can't find the cheese struck in maze."
                 popup_win(msg, "Better luck next time", path1, screen)
                 print("Rat can't find the cheese struck in maze.");
-                quit()
+                sys.quit()
             else:
                 maze[pos//n][pos%n] = 2
                 pos = stack.pop()
@@ -165,7 +166,7 @@ def path(n, maze):
                         msg = "Rat can't find the cheese struck in maze."
                         popup_win(msg, "Better luck next time", path1, screen)
                         print("Rat can't find the cheese struck in maze.");
-                        quit()
+                        sys.quit()
                     pos = stack.pop()
                     display_maze(n, maze, pos)
                     redraw_maze(grid, rect, screen, n, maze, pos, delay, wid)
