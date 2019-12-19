@@ -48,9 +48,13 @@ and
 
 ## Demo
 
-* ![Found a path](./just_a_demo-there_is_path.gif)
+**Found a Path**
 
-* ![No path](just_a_demo-no_path.gif)
+![Found a path](./just_a_demo-there_is_path.gif)
+
+**No Path**
+
+![No path](just_a_demo-no_path.gif)
 
 ## Miscellaneous
 
