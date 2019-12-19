@@ -4,10 +4,9 @@ import sys
 import time
 import numpy as np
 import tkinter as Mazegame
-from tkinter import *
-from tkinter import ttk
 from termcolor import colored
 from PIL import ImageTk, Image
+from tkinter import ttk, Canvas, Label
 
 #Mazegame.NoDefaultRoot()
 def input_postion(n):
@@ -16,18 +15,18 @@ def input_postion(n):
     except:
         src = 0
 
-    if src not in range(0, n*n-1):
+    if src not in range(0, n*n):
         print("Enter a valid Source Position")
-        sys.quit()
+        sys.exit()
 
     try:
         dest = int(input("Enter the position of Cheese: "))
     except:
         dest = n*n-1
 
-    if dest not in range(0, n*n-1):
+    if dest not in range(0, n*n):
         print("Enter a valid Destination Position")
-        sys.quit()
+        sys.exit()
 
     return src, dest
 
@@ -80,7 +79,7 @@ def make_screen(n):
        size = 750
     else:
         print("Invalid Maze size")
-        sys.quit()
+        sys.exit()
 
     cellw = int(size/n)
     cellh = int(size/n)
@@ -108,7 +107,7 @@ def load_img(size, path, dest):
     render = ImageTk.PhotoImage(load)
     img = Label(image=render)
     img.image = render
-    img.place(x=ycod*size, y=xcod*size)
+    img.place(x = ycod*size, y = xcod*size)
     return img
 
 def redraw_maze(grid, rect, screen, n, maze, pos, delay, size, dest):
@@ -180,8 +179,8 @@ def path(n, maze, src, dest):
             if len(stack) == 0:
                 msg = "Rat can't find the cheese struck in maze."
                 popup_win(msg, "Better luck next time", path1, screen)
-                print("Rat can't find the cheese struck in maze.");
-                sys.quit()
+                print("Rat can't find the cheese struck in maze.")
+                sys.exit()
             else:
                 maze[pos//n][pos%n] = 2
                 pos = stack.pop()
@@ -189,11 +188,11 @@ def path(n, maze, src, dest):
                     maze[pos//n][pos%n] = 2
                     if len(stack) == 0:
                         display_maze(n, maze, pos)
-                        redraw_maze(grid, rect, screen, n, maze, pos, delay,wid)
+                        redraw_maze(grid, rect, screen, n, maze, pos, delay, wid, dest)
                         msg = "Rat can't find the cheese struck in maze."
                         popup_win(msg, "Better luck next time", path1, screen)
-                        print("Rat can't find the cheese struck in maze.");
-                        sys.quit()
+                        print("Rat can't find the cheese struck in maze.")
+                        sys.exit()
                     pos = stack.pop()
                     display_maze(n, maze, pos)
                     redraw_maze(grid, rect, screen, n, maze, pos, delay, wid, dest)
@@ -220,4 +219,4 @@ if __name__ == "__main__":
     src, dest = input_postion(n)
     randno = rando(n)
     maze = prepare_maze(n, randno, src, dest)
-    path(n, maze)
+    path(n, maze, src, dest)

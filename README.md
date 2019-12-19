@@ -46,6 +46,12 @@ and
 
     sudo apt install python3-tk
 
+## Demo
+
+* ![Found a path](./just_a_demo-there_is_path.gif)
+
+* ![No path](just_a_demo-no_path.gif)
+
 ## Miscellaneous
 
 You can even change the colors of the maze; they are customizable
